@@ -1,15 +1,10 @@
 import React from "react";
-import AuthForm from "@/containers/auth/AuthForm";
-import AuthPlate from "@/containers/auth/AuthPlate";
+import RegisterForm from "@/containers/auth/RegisterForm";
 
 type Props = {};
 
 const page = (props: Props) => {
-    return (
-        <AuthPlate>
-            <AuthForm authText={"signup"} />
-        </AuthPlate>
-    );
+    return <RegisterForm />;
 };
 
 export default page;

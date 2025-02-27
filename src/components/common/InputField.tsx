@@ -29,7 +29,7 @@ function InputField({
                 onChange={onChange}
                 {...props}
             />
-            {error && <span>{error}</span>}
+            {error && <span className="text-red-500">{error}</span>}
         </>
     );
 }

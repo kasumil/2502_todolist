@@ -1,15 +1,10 @@
 import React from "react";
-import AuthPlate from "@/containers/auth/AuthPlate";
-import AuthForm from "@/containers/auth/AuthForm";
+import LoginForm from "@/containers/auth/LoginForm";
 
 type Props = {};
 
 const LoginPage = (props: Props) => {
-    return (
-        <AuthPlate>
-            <AuthForm authText={"login"} />
-        </AuthPlate>
-    );
+    return <LoginForm />;
 };
 
 export default LoginPage;
