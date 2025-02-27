@@ -5,6 +5,7 @@ import AuthPlate from "@/components/auth/AuthPlate";
 import { useRouter } from "next/navigation";
 import { login, signUp } from "@/utils/apis";
 import useStore from "@/store";
+import { emailValidator, passwordValidator } from "@/utils/validate";
 
 type Props = {};
 
@@ -31,6 +32,21 @@ const RegisterForm = (props: Props) => {
         if (password !== password_confirm) {
             // 비밀번호 다르다고 출력
             setError("비밀번호가 일치하지 않습니다");
+            setIsPending(false);
+            setForm((prev) => ({
+                ...prev,
+                password: "",
+                password_confirm: "",
+            }));
+            return;
+        }
+        if (emailValidator(email) === false) {
+            setError("이메일 형식이 올바르지 않습니다.");
+            setIsPending(false);
+            return;
+        }
+        if (passwordValidator(password) === false) {
+            setError("비밀번호는 6자 이상 20자 이하로 입력해주세요.");
             setIsPending(false);
             setForm((prev) => ({
                 ...prev,

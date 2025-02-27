@@ -5,6 +5,7 @@ import AuthForm from "@/components/auth/AuthForm";
 import AuthPlate from "@/components/auth/AuthPlate";
 import { login } from "@/utils/apis";
 import useStore from "@/store";
+import { emailValidator, passwordValidator } from "@/utils/validate";
 
 type Props = {};
 
@@ -26,6 +27,21 @@ const LoginForm = (props: Props) => {
             setIsPending(false);
             return;
         }
+        if (emailValidator(email) === false) {
+            setError("이메일 형식이 올바르지 않습니다.");
+            setIsPending(false);
+            return;
+        }
+        if (passwordValidator(password) === false) {
+            setError("비밀번호는 6자 이상 20자 이하로 입력해주세요.");
+            setIsPending(false);
+            setForm((prev) => ({
+                ...prev,
+                password: "",
+            }));
+            return;
+        }
+
         try {
             const response = await login({ email, password });
             if (response?.result === "Y") {

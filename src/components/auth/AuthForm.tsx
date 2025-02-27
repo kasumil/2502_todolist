@@ -71,7 +71,7 @@ const AuthForm = ({
 
                 <div className="flex justify-end mt-4">
                     <ButtonStyle type="submit" fullWidth disalbed={disabled}>
-                        {disabled ? "Processing..." : type}
+                        {disabled ? "진행중..." : type}
                     </ButtonStyle>
                 </div>
             </form>
