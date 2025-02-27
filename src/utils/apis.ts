@@ -21,6 +21,7 @@ export async function login({
     if (data.accessToken) {
         setHeader("Authorization", `Bearer ${data.accessToken}`);
     }
+    console.log(data);
     return data;
 }
 export async function signUp({ email, password }: RequestUser): Promise<void> {
@@ -30,7 +31,7 @@ export async function signUp({ email, password }: RequestUser): Promise<void> {
     });
     return data;
 }
-export async function logout({ email, password }: RequestUser): Promise<void> {
+export async function logout(): Promise<void> {
     const { data } = await axiosInstance.delete("/api/auth/logout");
     removeHeader("Authorization");
     return data;

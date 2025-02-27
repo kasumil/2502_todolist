@@ -1,9 +1,9 @@
 "use client";
 import React, { Suspense, useState } from "react";
+import { useRouter } from "next/navigation";
 import AuthForm from "@/components/auth/AuthForm";
 import AuthPlate from "@/components/auth/AuthPlate";
 import { login } from "@/utils/apis";
-import { useRouter } from "next/navigation";
 import useStore from "@/store";
 
 type Props = {};
@@ -16,7 +16,7 @@ const LoginForm = (props: Props) => {
     });
     const [error, setError] = useState("");
     const [isPending, setIsPending] = useState(false);
-    const { setLogged } = useStore();
+    const { setUser, setLogged } = useStore();
 
     const handleLogin = async () => {
         setIsPending(true);
@@ -27,20 +27,22 @@ const LoginForm = (props: Props) => {
             return;
         }
         try {
-            const response = await login({
-                email,
-                password,
-            });
-            if (response.result === "Y") {
+            const response = await login({ email, password });
+            if (response?.result === "Y") {
+                setLogged(true);
+                setUser(response?.user);
+                setForm({ email: "", password: "" }); // 로그인 성공 후 폼 초기화
                 alert("로그인 성공");
                 router.push("/");
-                setLogged(true);
+            } else {
+                setError("로그인 실패. 다시 시도해주세요.");
             }
         } catch (error) {
             console.log(error);
+            setError("서버 오류가 발생했습니다. 나중에 다시 시도해주세요.");
             setForm((prev) => ({
                 ...prev,
-                password: "",
+                password: "", // 비밀번호만 초기화
             }));
         } finally {
             setIsPending(false);

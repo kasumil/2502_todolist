@@ -4,6 +4,7 @@ import AuthForm from "@/components/auth/AuthForm";
 import AuthPlate from "@/components/auth/AuthPlate";
 import { useRouter } from "next/navigation";
 import { login, signUp } from "@/utils/apis";
+import useStore from "@/store";
 
 type Props = {};
 
@@ -16,7 +17,7 @@ const RegisterForm = (props: Props) => {
     });
     const [error, setError] = useState("");
     const [isPending, setIsPending] = useState(false);
-    const { setLogged } = useStore();
+    const { setLogged, setUser } = useStore();
 
     const handleRegister = async () => {
         setError("");
@@ -44,11 +45,12 @@ const RegisterForm = (props: Props) => {
                 email,
                 password,
             });
-            if (response.result === "Y") {
+            if (response?.result === "Y") {
                 alert("회원가입 성공");
                 const loginResponse = await login({ email, password });
                 if (loginResponse.result === "Y") {
                     setLogged(true);
+                    setUser(loginResponse?.user);
                     router.push("/");
                 } else {
                     setError("로그인 실패");
@@ -58,12 +60,11 @@ const RegisterForm = (props: Props) => {
             }
         } catch (error) {
             console.log(error);
-            setForm((prev) => ({
-                ...prev,
+            setForm({
                 email: "",
                 password: "",
                 password_confirm: "",
-            }));
+            });
         } finally {
             setIsPending(false);
         }

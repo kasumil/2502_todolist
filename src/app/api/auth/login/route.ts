@@ -15,15 +15,26 @@ export async function POST(request: Request) {
             email,
             password,
         });
-        console.log(data);
-        // 예제용 토큰 (실제 환경에서는 JWT를 사용)
-        const token = "your-secure-token";
+
+        if (data?.error) {
+            return new Response(
+                JSON.stringify({
+                    result: "N",
+                    message: data.error.message,
+                    error: data.error,
+                }),
+                {
+                    status: 400,
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+        }
 
         return new Response(
             JSON.stringify({
                 result: "Y",
                 message: "로그인 성공",
-                data: { token },
+                data,
             }),
             { status: 200, headers: { "Content-Type": "application/json" } }
         );
