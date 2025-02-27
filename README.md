@@ -34,4 +34,24 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
 # 2502_todolist
+
+파일구조
+
+src  
+├── api (실제 통신)
+├── app  
+│ ├── favicon.ico  
+│ ├── globals.css  
+│ ├── layout.tsx  
+│ └── page.tsx  
+├── components (컴포넌트들)
+├── constants (상수)
+├── containers (페이지 컨테이너)
+├── hooks (재활용 훅들)
+├── store (상태관리)
+├── styles (색상정의)
+├── types (타입정의)
+├── utils (재활용하나 훅이 아닌 유틸)
+└── .editorconfig
