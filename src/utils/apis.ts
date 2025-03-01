@@ -1,4 +1,4 @@
-import axiosInstance, { removeHeader, setHeader } from "./axiosInstance";
+import axiosInstance from "./axiosInstance";
 
 type RequestUser = {
     email: string;
@@ -18,10 +18,6 @@ export async function login({
         email,
         password,
     });
-    if (data.accessToken) {
-        setHeader("Authorization", `Bearer ${data.accessToken}`);
-    }
-    console.log(data);
     return data;
 }
 export async function signUp({ email, password }: RequestUser): Promise<void> {
@@ -33,6 +29,10 @@ export async function signUp({ email, password }: RequestUser): Promise<void> {
 }
 export async function logout(): Promise<void> {
     const { data } = await axiosInstance.delete("/api/auth/logout");
-    removeHeader("Authorization");
+    return data;
+}
+
+export async function refreshAccessToken(): Promise<object> {
+    const { data } = await axiosInstance.post("/api/auth/refresh");
     return data;
 }

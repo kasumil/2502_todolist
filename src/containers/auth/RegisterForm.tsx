@@ -66,7 +66,7 @@ const RegisterForm = (props: Props) => {
                 const loginResponse = await login({ email, password });
                 if (loginResponse.result === "Y") {
                     setLogged(true);
-                    setUser(loginResponse?.user);
+                    setUser(loginResponse?.data);
                     router.push("/");
                 } else {
                     setError("로그인 실패");

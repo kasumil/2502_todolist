@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/app/api/supabase";
 
 export async function POST(request: Request) {
     try {
@@ -25,6 +25,7 @@ export async function POST(request: Request) {
                 { status: 200, headers: { "Content-Type": "application/json" } }
             );
         } else {
+            console.log(data);
             return new Response(
                 JSON.stringify({
                     result: "N",
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
             );
         }
     } catch (error) {
+        console.log("logout error: " + error);
         return new Response(
             JSON.stringify({ error: "Internal Server Error" }),
             { status: 500, headers: { "Content-Type": "application/json" } }

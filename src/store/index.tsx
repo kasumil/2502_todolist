@@ -1,27 +1,36 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
-const useStore = create((set) => ({
-    isLogged: false,
-    setLogged: (isLogged: boolean) => set({ isLogged }),
-    user: null,
-    setUser: (user: any) => set({ user }),
-    token: null,
-    setToken: (token: string) => set({ token }),
-    logout: () => set({ isLogged: false, user: null, token: null }),
-    loading: false,
-    setLoading: (loading: boolean) => set({ loading }),
-    error: null,
-    setError: (error: any) => set({ error }),
-    clearError: () => set({ error: null }),
-    success: null,
-    setSuccess: (success: any) => set({ success }),
-    clearSuccess: () => set({ success: null }),
-    modal: null,
-    setModal: (modal: any) => set({ modal }),
-    clearModal: () => set({ modal: null }),
-    modalData: null,
-    setModalData: (modalData: any) => set({ modalData }),
-    clearModalData: () => set({ modalData: null }),
-}));
+const useStore = create(
+    persist(
+        (set) => ({
+            isLogged: false,
+            user: null,
+            token: null,
+            setLogged: (isLogged: boolean) => set({ isLogged }),
+            setUser: (user: object | null) => set({ user }),
+            setToken: (token: string | null) => set({ token }),
+            logout: () => set({ isLogged: false, user: null, token: null }),
+
+            modal: false,
+            modalData: null,
+            setModal: (modal: boolean) => set({ modal }),
+            setModalData: (modalData: object | string | null) =>
+                set({ modalData }),
+            clearModal: () => set({ modal: false }),
+            clearModalData: () => set({ modalData: null }),
+
+            loading: false,
+            error: null,
+            setLoading: (loading: boolean) => set({ loading }),
+            setError: (error: Error | string | null) => set({ error }),
+            clearError: () => set({ error: null }),
+        }),
+        {
+            name: "todolist-storage", // name of the item in the storage (must be unique)
+            storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+        }
+    )
+);
 
 export default useStore;

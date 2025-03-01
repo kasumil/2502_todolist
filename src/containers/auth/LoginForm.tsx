@@ -46,7 +46,7 @@ const LoginForm = (props: Props) => {
             const response = await login({ email, password });
             if (response?.result === "Y") {
                 setLogged(true);
-                setUser(response?.user);
+                setUser(response?.data);
                 setForm({ email: "", password: "" }); // 로그인 성공 후 폼 초기화
                 alert("로그인 성공");
                 router.push("/");
