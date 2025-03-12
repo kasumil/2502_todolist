@@ -67,7 +67,7 @@ const RegisterForm = (props: Props) => {
                 if (loginResponse.result === "Y") {
                     setLogged(true);
                     setUser(loginResponse?.data);
-                    router.push("/");
+                    router.push("/home");
                 } else {
                     setError("로그인 실패");
                 }

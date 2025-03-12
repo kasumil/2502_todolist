@@ -21,3 +21,8 @@ export async function DELETE() {
         );
     }
 }
+
+export async function GET() {
+    const cookieStorage = await cookies();
+    return cookieStorage.delete("TokenData");
+}

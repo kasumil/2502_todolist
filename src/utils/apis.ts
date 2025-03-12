@@ -32,6 +32,10 @@ export async function logout(): Promise<void> {
     return data;
 }
 
+export async function tokenDelete(): Promise<void> {
+    await axiosInstance.get("/api/auth/logout");
+}
+
 export async function refreshAccessToken(): Promise<object> {
     const { data } = await axiosInstance.post("/api/auth/refresh");
     return data;

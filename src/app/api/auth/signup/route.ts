@@ -17,6 +17,15 @@ export async function POST(request: Request) {
         });
 
         if (data) {
+            // 비밀번호 포함해서 usertable에 저장
+            // const { error: insertError } = await supabase
+            //     .from("usertable")
+            //     .insert([{ email, password }]);
+
+            // if (insertError) {
+            //     console.error("usertable 저장 실패:", insertError.message);
+            }
+
             return new Response(
                 JSON.stringify({
                     result: "Y",

@@ -13,17 +13,17 @@ export async function POST(request: Request) {
             );
         }
 
-        const { data } = await supabase.auth.signInWithPassword({
+        const data = await supabase.auth.signInWithPassword({
             email,
             password,
         });
 
         if (data?.error) {
-            console.log("data error: " + data);
+            console.log("data error: " + data.error);
             return new Response(
                 JSON.stringify({
                     result: "N",
-                    message: data?.error.message,
+                    message: data?.error,
                     error: data?.error,
                 }),
                 {
@@ -33,13 +33,14 @@ export async function POST(request: Request) {
             );
         }
 
-        if (data?.session?.access_token) {
+        if (data.data?.session?.access_token) {
             cookieStorage.set({
                 name: "TokenData",
-                value: JSON.stringify(data.session), // JSON.stringify() 해야 함
+                value: JSON.stringify(data?.data?.session), // JSON.stringify() 해야 함
                 httpOnly: true,
                 secure: true,
                 path: "/",
+                sameSite: true,
             });
         }
 
@@ -47,7 +48,7 @@ export async function POST(request: Request) {
             JSON.stringify({
                 result: "Y",
                 message: "로그인 성공",
-                data: data.user,
+                data: data.data.user,
             }),
             { status: 200, headers: { "Content-Type": "application/json" } }
         );
