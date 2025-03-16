@@ -2,7 +2,7 @@ import { formatDateTime } from "@/utils/format";
 import React, { useState } from "react";
 import { HiPencilAlt, HiTrash } from "react-icons/hi";
 
-const ListsRow = ({ item }) => {
+const ListsRow = ({ item, deleteShow, showModal }) => {
     const [isChecked, setIsChecked] = useState(false);
     const [time, setTime] = useState(item.time);
 
@@ -32,10 +32,16 @@ const ListsRow = ({ item }) => {
                 </div>
                 {isChecked && (
                     <div className="flex justify-end gap-4">
-                        <button className="hover:text-blue-500 active:text-blue-700 transition duration-200">
+                        <button
+                            className="hover:text-blue-500 active:text-blue-700 transition duration-200"
+                            onClick={() => showModal(item.id)}
+                        >
                             <HiPencilAlt size={25} />
                         </button>
-                        <button className="hover:text-red-500 active:text-red-700 transition duration-200">
+                        <button
+                            className="hover:text-red-500 active:text-red-700 transition duration-200"
+                            onClick={() => deleteShow()}
+                        >
                             <HiTrash size={25} />
                         </button>
                     </div>

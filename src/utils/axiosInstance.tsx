@@ -1,6 +1,6 @@
 import axios from "axios";
-import { refreshAccessToken } from "./apis";
-import getAccessToken from "../serverActions/auth";
+import { refreshAccessToken } from "./client/apis";
+import getAccessToken from "./client/auth";
 
 const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,

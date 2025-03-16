@@ -1,39 +1,30 @@
 "use client";
 import React, { useState } from "react";
-import ButtonStyle from "@/components/common/ButtonStyle";
 import useStore from "@/store";
-import { logout, tokenDelete } from "@/utils/apis";
+import { logout } from "@/utils/client/apis";
 import { useRouter } from "next/navigation";
-import { IoIosArrowDown } from "react-icons/io";
-import { AnimatePresence, motion } from "motion/react";
-import { FaUserCircle } from "react-icons/fa";
-import TitleText from "@/components/common/TitleText";
-import List from "@/components/common/List";
-import ListsRow from "@/components/common/ListRow";
+import useModal from "@/hooks/useModal";
+import Sidebar from "@/components/home/Sidebar";
+import TaskList from "@/components/home/TaskList";
+import TaskModal from "@/components/modals/TaskModal";
+import DeleteModal from "@/components/modals/DeleteModal";
+import ProjectNameInput from "@/components/home/ProjectNameInput"; // Import the new component
+import CategoryNameModal from "@/components/modals/CategoryNameModal";
 
 type Props = {};
 
 const HomePage = (props: Props) => {
-    const { user, setLogged, token } = useStore();
-    const [pressSelect, setPressSelect] = useState(false);
-    const router = useRouter();
-
-    const handleLogout = async () => {
-        const response = await logout();
-        if (response?.result === "Y") {
-            if (response?.data.user) {
-                alert("로그아웃 성공");
-                return;
-            } else {
-                alert("로그인은 성공했지만 유저 정보가 없습니다.");
-                return;
-            }
-        } else {
-            alert("로그아웃 실패");
-        }
-        setLogged(false);
-        router.push("/login");
-    };
+    const { isVisible, modalShow, modalHide } = useModal();
+    const {
+        isVisible: deleteModal,
+        modalShow: deleteShow,
+        modalHide: deleteHide,
+    } = useModal();
+    const {
+        isVisible: categoryModal,
+        modalShow: categoryShow,
+        modalHide: categoryHide,
+    } = useModal();
 
     const mockData = [
         {
@@ -59,52 +50,16 @@ const HomePage = (props: Props) => {
     ];
 
     return (
-        <div className="h-dvh p-5 p-md-10 bg-white flex flex-col md:flex-row gap-3 overflow-scroll">
-            <div className="bg-gray-400 w-full md:w-xs h-40 md:h-full rounded-lg shadow-md p-5">
-                <div className="flex items-center justify-between">
-                    <div
-                        className="relative w-full"
-                        onClick={() => setPressSelect(!pressSelect)}
-                    >
-                        <div className="flex gap-3 items-center cursor-pointer px-1">
-                            <FaUserCircle size={30} />
-                            <p className="text-white">{user?.email}</p>
-                            <motion.div
-                                initial={{ rotate: 0 }}
-                                animate={{
-                                    rotate: pressSelect ? 180 : 0,
-                                }}
-                                transition={{ duration: 0.4 }}
-                                className="flex items-center"
-                            >
-                                <IoIosArrowDown />
-                            </motion.div>
-                        </div>
-                        <AnimatePresence>
-                            {pressSelect && (
-                                <motion.div
-                                    className="absolute w-full top-12"
-                                    key="modal"
-                                    initial="hidden"
-                                    animate={{ y: -5 }}
-                                    exit={{ y: -5 }}
-                                >
-                                    <ButtonStyle
-                                        fullWidth
-                                        onClick={handleLogout}
-                                    >
-                                        로그아웃
-                                    </ButtonStyle>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
-                </div>
-            </div>
-            <div className="w-full h-full bg-white rounded-lg shadow-2xl p-5 flex flex-col border border-gray-300 gap-4">
-                <TitleText>오늘</TitleText>
-                <List items={mockData} Component={ListsRow} />
-            </div>
+        <div className="h-dvh p-5 p-md-10 bg-white flex flex-col md:flex-row gap-3">
+            <Sidebar categoryShow={categoryShow} />
+            <TaskList
+                tasks={mockData}
+                showModal={modalShow}
+                deleteShow={deleteShow}
+            />
+            <TaskModal isOpen={isVisible} onClose={modalHide} />
+            <DeleteModal isOpen={deleteModal} onClose={deleteHide} />
+            <CategoryNameModal isOpen={categoryModal} onClose={categoryHide} />
         </div>
     );
 };

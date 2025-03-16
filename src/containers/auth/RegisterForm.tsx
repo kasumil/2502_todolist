@@ -3,7 +3,7 @@ import React, { Suspense, useState } from "react";
 import AuthForm from "@/components/auth/AuthForm";
 import AuthPlate from "@/components/auth/AuthPlate";
 import { useRouter } from "next/navigation";
-import { login, signUp } from "@/utils/apis";
+import { login, signUp } from "@/utils/client/apis";
 import useStore from "@/store";
 import { emailValidator, passwordValidator } from "@/utils/validate";
 

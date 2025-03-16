@@ -2,6 +2,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import classNames from "classnames";
+import { buttonColors } from "@/styles/buttonStyles";
 
 type Props = {
     href?: string;
@@ -10,6 +11,8 @@ type Props = {
     fullWidth?: boolean;
     buttonColor?: string;
     disabled?: boolean;
+    variant: string;
+    shade: number;
 };
 
 function ButtonStyle({
@@ -17,6 +20,8 @@ function ButtonStyle({
     fullWidth,
     buttonColor = "gray",
     disabled = false,
+    variant = "solid",
+    shade = 800,
     ...rest
 }: Props) {
     const handleClick = (e) => {
@@ -28,16 +33,16 @@ function ButtonStyle({
         }
     };
 
+    const buttonColorClass =
+        buttonColors[buttonColor]?.[variant]?.[shade] ||
+        buttonColors["gray"].solid[800];
+
     const buttonClass = classNames(
-        "border-none rounded-md text-base font-bold px-4 py-1 text-white outline-none cursor-pointer disabled:cursor-not-allowed",
-        {
-            "w-full": fullWidth,
-            [`bg-${buttonColor}-800 hover:bg-${buttonColor}-600 disabled:bg-${buttonColor}-300 disabled:text-${buttonColor}-500`]:
-                buttonColor,
-            "bg-gray-800 hover:bg-gray-600 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed":
-                !buttonColor,
-        }
+        "border-none rounded-md text-base font-bold px-4 py-1 outline-none cursor-pointer disabled:cursor-not-allowed",
+        { "w-full": fullWidth },
+        buttonColorClass
     );
+
     return (
         <button
             onClick={handleClick}
