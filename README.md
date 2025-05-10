@@ -40,18 +40,17 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 파일구조
 
 src  
-├── api (실제 통신)
 ├── app  
+│ ├── api  
 │ ├── favicon.ico  
 │ ├── globals.css  
 │ ├── layout.tsx  
 │ └── page.tsx  
-├── components (컴포넌트들)
-├── constants (상수)
-├── containers (페이지 컨테이너)
-├── hooks (재활용 훅들)
-├── store (상태관리)
-├── styles (색상정의)
-├── types (타입정의)
-├── utils (재활용하나 훅이 아닌 유틸)
-└── .editorconfig
+├── components  
+├── constants  
+├── containers  
+├── hooks  
+├── store  
+├── styles  
+├── types  
+└── utils

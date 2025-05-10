@@ -1,9 +1,10 @@
 import React from "react";
+import RegisterForm from "@/containers/auth/RegisterForm";
 
 type Props = {};
 
 const page = (props: Props) => {
-    return <div>page</div>;
+    return <RegisterForm />;
 };
 
 export default page;
